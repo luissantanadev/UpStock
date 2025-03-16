@@ -3,8 +3,7 @@
 from src.utils.database import Database
 
 class Cliente:
-    def __init__(self, idcliente=None, cnpjcpf=None, descricao=None, cep=None, endereco=None,
-                 bairro=None, cidade=None, uf=None, telefone=None, celular=None, email=None):
+    def __init__(self, idcliente=None, cnpjcpf=None, descricao=None, cep=None, endereco=None, bairro=None, cidade=None, uf=None, telefone=None, celular=None, email=None):
         self.idcliente = idcliente
         self.cnpjcpf = cnpjcpf
         self.descricao = descricao
@@ -28,8 +27,7 @@ class Cliente:
                 INSERT INTO tblcliente (cnpjcpf, descricao, cep, endereco, bairro, cidade, uf, telefone, celular, email)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
-            params = (self.cnpjcpf, self.descricao, self.cep, self.endereco, self.bairro, self.cidade, 
-                      self.uf, self.telefone, self.celular, self.email)
+            params = (self.cnpjcpf, self.descricao, self.cep, self.endereco, self.bairro, self.cidade, self.uf, self.telefone, self.celular, self.email)
             cursor = self.db.execute(query, params)
             self.idcliente = cursor.lastrowid  # Pega o ID gerado pelo banco
             self.db.connection.commit()
@@ -44,20 +42,18 @@ class Cliente:
             self.db.execute(query, params)
             self.db.connection.commit()
 
-    @classmethod
-    def get_by_id(cls, idcliente):
-        """
-        Retorna uma instância de Cliente com base no ID.
-        """
+    @staticmethod
+    def get_by_id(idcliente):
+        """Busca um cliente pelo ID"""
         db = Database()
-        query = """
-            SELECT idcliente, cnpjcpf, descricao, cep, endereco, bairro, cidade, uf, telefone, celular, email
-            FROM tblcliente WHERE idcliente = %s
-        """
+        query = "SELECT * FROM tblcliente WHERE idcliente = %s"
+        
         cursor = db.execute(query, (idcliente,))
-        result = cursor.fetchone()
-        if result:
-            return cls(*result)
+        cliente_data = cursor.fetchone()
+        db.close()
+        
+        if cliente_data:
+            return Cliente(**cliente_data)
         return None
 
     def delete(self):

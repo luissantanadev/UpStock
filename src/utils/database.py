@@ -16,7 +16,15 @@ class Database:
         """Conectar ao banco de dados"""
         self.connection = connection
         self.cursor = self.connection.cursor(dictionary=True)
-        print("Conectado ao banco de dados")
+
+    def execute(self, query, params=None):
+        """Executa um comando SQL e retorna o cursor"""
+        self.cursor.execute(query, params or ())
+        return self.cursor
+
+    def commit(self):
+        """Confirma as alterações no banco de dados"""
+        self.connection.commit()
 
     def close(self):
         """Fechar a conexão com o banco de dados""" 
