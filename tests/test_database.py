@@ -1,5 +1,5 @@
 import unittest
-from src.utils.database import Database
+from utils.database import Database
 
 class TestDatabase(unittest.TestCase):
     def setUp(self):
