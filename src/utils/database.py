@@ -32,7 +32,6 @@ class Database:
             self.cursor.close()
         if self.connection:
             self.connection.close()
-        print("Conexão com o banco de dados fechada")
 
     def select_all(self, table):
         """Selecionar todos os registros da tabela especificada"""
@@ -42,7 +41,6 @@ class Database:
             rows = self.cursor.fetchall()
             return rows
         except mysql.connector.Error as err:
-            print(f"Erro: {err}")
             return None
 
     def select_id(self, table, id_column, id):
@@ -53,7 +51,6 @@ class Database:
             row = self.cursor.fetchone()
             return row
         except mysql.connector.Error as err:
-            print(f"Erro: {err}")
             return None
 
     def insert_all(self, table, values):
@@ -64,9 +61,7 @@ class Database:
             sql = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
             self.cursor.execute(sql, tuple(values.values()))
             self.connection.commit()
-            print(f"Inserido {self.cursor.rowcount} linhas em {table}")
         except mysql.connector.Error as err:
-            print(f"Erro: {err}")
             self.connection.rollback()
 
     def update(self, table, values, id_column, id):
@@ -76,9 +71,7 @@ class Database:
             sql = f"UPDATE {table} SET {set_clause} WHERE {id_column} = %s"
             self.cursor.execute(sql, (*values.values(), id))
             self.connection.commit()
-            print(f"Atualizado {self.cursor.rowcount} linhas em {table}")
         except mysql.connector.Error as err:
-            print(f"Erro: {err}")
             self.connection.rollback()
 
     def delete_all(self, table):
@@ -87,9 +80,7 @@ class Database:
             sql = f"DELETE * FROM {table}"
             self.cursor.execute(sql)
             self.connection.commit()
-            print(f"Excluído {self.cursor.rowcount} linhas de {table}")
         except mysql.connector.Error as err:
-            print(f"Erro: {err}")
             self.connection.rollback()
 
     def delete_id(self, table, id_column, id): 
@@ -98,7 +89,5 @@ class Database:
             sql = f"DELETE FROM {table} WHERE {id_column} = %s"
             self.cursor.execute(sql, (id,))
             self.connection.commit()
-            print(f"Excluído {self.cursor.rowcount} linhas de {table}")
         except mysql.connector.Error as err:
-            print(f"Erro: {err}")
             self.connection.rollback()
