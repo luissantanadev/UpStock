@@ -94,16 +94,3 @@ class Database:
         except mysql.connector.Error as err:
             print(f"Erro: {err}")
             self.connection.rollback()
-
-if __name__ == "__main__":
-    # Exemplo de uso
-    try:
-        data = Database()
-        print("Conexão com o banco de dados estabelecida.")
-        # Exemplo de operação de inserção
-        print(data.select_by_id("tbllogin","idlogin", 2))
-    except mysql.connector.Error as err:
-        print(f"Erro: {err}")
-    finally:
-        if data.connection:
-            data.close()
