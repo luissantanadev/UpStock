@@ -1,5 +1,9 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 import unittest
-from utils.database import Database
+from src.utils.database import Database
 
 class TestDatabase(unittest.TestCase):
     def setUp(self):
