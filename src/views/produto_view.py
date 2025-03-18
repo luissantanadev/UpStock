@@ -8,4 +8,4 @@ class ProdutoView(QMainWindow):
         ui_path = os.path.join(os.path.dirname(__file__), 'screens', 'frm_produto.ui')
         uic.loadUi(ui_path, self)
         self.setWindowTitle("Vendas")
-        self.setGeometry(100, 100, 800, 600)
+        #self.setGeometry(100, 100, 800, 600)
