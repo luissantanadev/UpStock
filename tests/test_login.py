@@ -1,46 +1,45 @@
 import unittest
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5.QtTest import QTest
-from PyQt5.QtCore import Qt 
+from PyQt5.QtCore import Qt
 from src.views.login_view import LoginView
 from src.controllers.usuario_controller import UsuarioController
-from src.models.usuario import Usuario
 
+app = QApplication([])  # Precisa ser instanciado para testes com PyQt5
 
-app = QApplication([]) # Cria uma instância do QApplication para os testes
-
-class TestLoginView(unittest.TestCase):
+class TestLogin(unittest.TestCase):
     def setUp(self):
-        # Configura o ambiente de teste
+        """Configuração inicial para cada teste"""
         self.login_view = LoginView()
         self.login_view.show()
 
     def tearDown(self):
-        # Fecha a tela de login após os testes
+        """Fecha a janela após cada teste"""
         self.login_view.close()
 
-    def test_login_success(self):
-        # Simula a entrada de dados corretos
-        self.login_view.lineuser.setText("adm")
-        self.login_view.linekey.setText("adm")
-        
-        # Simula o clique no botão de login
+    def test_campos_vazios(self):
+        """Testa se aparece erro ao tentar logar com campos vazios"""
         QTest.mouseClick(self.login_view.btnlogin, Qt.LeftButton)
-        
-        # Verifica se a tela principal foi aberta (aqui você pode verificar se a tela principal está visível ou não)
-        # self.assertTrue(self.login_view.principal_view.isVisible())
+        self.assertIn("Preencha todos os campos!", self.login_view.findChild(QMessageBox, "Erro"))
 
     def test_login_invalido(self):
-        # Simula a entrada de dados incorretos
-        self.login_view.lineuser.setText("usuario_incorreto")
-        self.login_view.linekey.setText("senha_incorreta")
-        
-        # Simula o clique no botão de login
+        """Testa se um usuário inválido exibe mensagem de erro"""
+        self.login_view.lineuser.setText("usuario_inexistente")
+        self.login_view.linekey.setText("senha_errada")
         QTest.mouseClick(self.login_view.btnlogin, Qt.LeftButton)
-        
-        # Verifica se a mensagem de erro foi exibida (aqui você pode verificar se a mensagem de erro está visível ou não)
-        # self.assertTrue(QMessageBox.warning.called)  # Exemplo, ajuste conforme necessário
+
+        self.assertIn("Usuário ou senha incorretos!", self.login_view.findChild(QMessageBox, "Erro"))
+
+    def test_login_valido(self):
+        """Testa se um usuário válido faz login corretamente"""
+        # Simulamos um usuário válido
+        UsuarioController.cadastrar("Teste", "usuario_teste", "senha_teste")
+
+        self.login_view.lineuser.setText("usuario_teste")
+        self.login_view.linekey.setText("senha_teste")
+        QTest.mouseClick(self.login_view.btnlogin, Qt.LeftButton)
+
+        self.assertTrue(self.login_view.principal_view.isVisible())
 
 if __name__ == "__main__":
     unittest.main()
-#     # Executa os testes
