@@ -1,5 +1,5 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 import os
 from controllers.usuario_controller import UsuarioController
 
@@ -11,13 +11,16 @@ class CadastroUsuarioWindow(QMainWindow):
         ui_path = os.path.join(os.path.dirname(__file__), 'screens', 'frm_caduser.ui')
         uic.loadUi(ui_path, self)
 
+        # Configurando o campo de senha para ocultar o texto
+        self.lineKey.setEchoMode(QLineEdit.Password)
+
         # Conectando botão a função de cadastro
         self.btnSalvar.clicked.connect(self.cadastrar_usuario)
 
     def cadastrar_usuario(self):
-        nome = self.line_nome.text()
-        usuario = self.line_usuario.text()
-        senha = self.line_senha.text()
+        nome = self.lineNome.text()
+        usuario = self.lineUser.text()
+        senha = self.lineKey.text()
 
         if not nome or not usuario or not senha:
             QMessageBox.warning(self, "Erro", "Todos os campos são obrigatórios!")
