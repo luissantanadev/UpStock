@@ -1,4 +1,4 @@
-from utils.database import Database
+from src.utils.database import Database
 
 class Usuario:
     def __init__(self, nome, login, senha):

@@ -1,4 +1,4 @@
-from models.usuario import Usuario
+from src.models.usuario import Usuario
 
 class UsuarioController:
     @staticmethod
