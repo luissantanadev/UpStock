@@ -28,11 +28,12 @@ class LoginView(QMainWindow):
             return
         if UsuarioController.verificar_login(login, senha):
             QMessageBox.information(self, "Sucesso", "Login realizado com sucesso.")
+            self.abrir_principal()
         else:
             QMessageBox.warning(self, "Erro", "Usuário ou senha incorretos.")
             return
-def abrir_principal(self):
-    # Fecha a tela de login e abre a tela principal
-    self.close() # Fecha a tela de login
-    self.principal_view = PrincipalView()
-    self.principal_view.show()
+    def abrir_principal(self):
+        # Fecha a tela de login e abre a tela principal
+        self.close() # Fecha a tela de login
+        self.principal_view = PrincipalView()
+        self.principal_view.show()

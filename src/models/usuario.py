@@ -15,6 +15,7 @@ class Usuario:
     @staticmethod
     def verificar(login, senha):
         db = Database()
+        # Verifica se o login e senha estão corretos
         query = "SELECT * FROM tbllogin WHERE login = %s AND senha = %s"
         values = (login, senha)
         resultado = db.fetch_one(query, values)
