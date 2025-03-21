@@ -23,6 +23,11 @@ class Database:
         self.connection.commit()
         return self.cursor
 
+    def fetch_one(self, query, params=None):
+        """Executa um comando SQL e retorna um único resultado"""
+        self.cursor.execute(query, params or ())
+        return self.cursor.fetchone()
+
     def commit(self):
         """Confirma as alterações no banco de dados"""
         self.connection.commit()
