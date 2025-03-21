@@ -20,6 +20,7 @@ class Database:
     def execute(self, query, params=None):
         """Executa um comando SQL e retorna o cursor"""
         self.cursor.execute(query, params or ())
+        self.connection.commit()
         return self.cursor
 
     def commit(self):
