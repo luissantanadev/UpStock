@@ -1,4 +1,4 @@
-from src.utils.database import Database
+from utils.database import Database
 
 class Usuario:
     def __init__(self, nome, login, senha):
@@ -16,7 +16,13 @@ class Usuario:
     def verificar(login, senha):
         db = Database()
         # Verifica se o login e senha estão corretos
-        query = "SELECT * FROM tbllogin WHERE login = %s AND senha = %s"
+        query = "SELECT * FROM tbllogin WHERE login = '%s' AND senha = '%s'"
         values = (login, senha)
         resultado = db.fetch_one(query, values)
-        return resultado is not None  # Retorna True se o login for válido
+        return resultado  # Retorna True se o login for válido
+    def atualizar_senha(self,login, nova_senha):
+        db = Database()
+        # Atualiza a senha do usuário no banco de dados
+        query = "UPDATE tbllogin SET senha = %s WHERE login = %s"
+        values = (nova_senha, login)
+        return db.execute(query, values)

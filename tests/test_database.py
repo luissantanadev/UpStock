@@ -12,7 +12,13 @@ try:
     data = Database()
     print("Conexão com o banco de dados estabelecida.")
     # Exemplo de operação de inserção
-    print(data.select_id("tbllogin","idlogin", 2))
+    login = "adm"
+    senha = "adm2"
+    selct = data.select_all("tbllogin")
+    print(selct)
+    result = data.fetch_one(f"SELECT * FROM tbllogin WHERE login = '{login}' AND senha = '{senha}'")
+    print(result)
+    # Exemplo de operação de seleção
 except mysql.connector.Error as err:
     print(f"Erro: {err}")
 finally:

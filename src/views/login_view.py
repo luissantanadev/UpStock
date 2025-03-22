@@ -1,8 +1,8 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit, QPushButton
 import os
-from src.controllers.usuario_controller import UsuarioController
-from src.views.principal_view import PrincipalView
+from controllers.usuario_controller import UsuarioController
+from views.principal_view import PrincipalView
 
 class LoginView(QMainWindow):
     def __init__(self):
@@ -27,18 +27,24 @@ class LoginView(QMainWindow):
         senha = self.linekey.text()
 
         # Verificando se o usuário e senha estão corretos
-        if not login or not senha:
-            QMessageBox.warning(self, "Erro", "Preencha todos os campos.")
+        if not self.validar_campos(login, senha):
             return
-        if UsuarioController.verificar_login(login, senha):
+        if UsuarioController.verificar_login(login, senha) == True:
             QMessageBox.information(self, "Sucesso", "Login realizado com sucesso.")
             self.abrir_principal()
         else:
             QMessageBox.warning(self, "Erro", "Usuário ou senha incorretos.")
             return
 
+    def validar_campos(self, login, senha):
+        if not login or not senha:
+            QMessageBox.warning(self, "Erro", "Preencha todos os campos.")
+            return False
+        return True
+
     def abrir_principal(self):
         # Fecha a tela de login e abre a tela principal
         self.close() # Fecha a tela de login
+        print("Login realizado com sucesso.")
         self.principal_view = PrincipalView()
         self.principal_view.show()
