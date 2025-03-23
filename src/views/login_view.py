@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit, QPushButton
-import os
+import os as os_module
 from controllers.usuario_controller import UsuarioController
 
 class LoginView(QMainWindow):
@@ -11,7 +11,7 @@ class LoginView(QMainWindow):
 
     def setup_ui(self):
         # caminho do arquivo .ui
-        ui_path = os.path.join(os.path.dirname(__file__), '../views/screens/frm_login.ui')
+        ui_path = os_module.path.join(os_module.path.dirname(__file__), '../views/screens/frm_login.ui')
         uic.loadUi(ui_path, self)
 
         # Configurando o campo de senha para ocultar o texto
