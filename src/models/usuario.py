@@ -1,4 +1,6 @@
 from utils.database import Database
+import mysql.connector
+import mysql.connector.errors
 
 class Usuario:
     def __init__(self, nome, login, senha):
@@ -14,12 +16,15 @@ class Usuario:
         return db.execute(query, values)
     @staticmethod
     def verificar(login, senha):
-        db = Database()
-        # Verifica se o login e senha estão corretos
-        query = "SELECT * FROM tbllogin WHERE login = '%s' AND senha = '%s'"
-        values = (login, senha)
-        resultado = db.fetch_one(query, values)
-        return resultado  # Retorna True se o login for válido
+        try:
+            db = Database()
+            # Verifica se o login e senha estão corretos
+            query = "SELECT * FROM tbllogin WHERE login = %s AND senha = %s"
+            resultado = db.fetch_one(query, (login, senha))
+            return resultado  # Retorna True se o login for válido
+        except mysql.connector.Error as err:
+            print(f"Erro ao verificar login: {err}")
+
     def atualizar_senha(self,login, nova_senha):
         db = Database()
         # Atualiza a senha do usuário no banco de dados
