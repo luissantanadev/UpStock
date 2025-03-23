@@ -21,12 +21,7 @@ try:
     # Exemplo de operação de inserção
     login = "adm"
     senha = "adm"
-    selct = data.select_all("tbllogin")
-    print(selct)
-    result = data.fetch_one(f"SELECT * FROM tbllogin WHERE login = '{login}' AND senha = '{senha}'")
     
-    test_model = Usuario.verificar(login, senha)
-    print(test_model)
     print("****************************************************************************")
     test_controller = UsuarioController.verificar_login(login, senha)
     print(f"print 'test_controller', {test_controller}")
