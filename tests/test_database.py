@@ -24,11 +24,12 @@ try:
     
     print("****************************************************************************")
     test_controller = UsuarioController.verificar_login(login, senha)
-    print(f"print 'test_controller', {test_controller}")
-    if test_controller == True:
+    print(f'resultado do teste: {Usuario.verificar(login, senha)}')
+    print("****************************************************************************")
+    if test_controller is not None:
         tela = PrincipalView()
         tela.show()
-        print("Usuário autenticado com sucesso.")
+        
     else:
         print("Falha na autenticação do usuário.")
 

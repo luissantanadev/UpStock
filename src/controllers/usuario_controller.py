@@ -7,12 +7,9 @@ class UsuarioController:
         return novousuario.salvar()
     @staticmethod
     def verificar_login(login, senha):
-        user = Usuario.verificar(login, senha) 
-        print(f"Verificando login: {login}, senha: {senha}")
-        print(f"Resultado da verificação: {user}")
-        if not user:
-            return False  # Login inválido
-        return user["login"] == login and user["senha"] == senha
+        print(f"Verificando login para {login} com senha {senha}")
+        # Verifica se o login e senha estão corretos
+        return Usuario.verificar(login, senha)
 
     @staticmethod
     def atualizar_senha(login, nova_senha):
