@@ -34,6 +34,9 @@ class UsuarioView(QMainWindow):
 
         if UsuarioController.cadastrar(nome, login, senha):
             QMessageBox.information(self, "Sucesso", "Usuário cadastrado com sucesso.")
-            
+            # Limpa os campos após o cadastro
+            self.lineNome.clear()
+            self.lineUser.clear()
+            self.lineKey.clear()
         else:
             QMessageBox.warning(self, "Erro", "Falha ao cadastrar o usuário.")
