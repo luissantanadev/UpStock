@@ -10,7 +10,6 @@ class Usuario:
     def salvar(self):
         # Salva o usuário no banco de dados
         db = Database()
-        db.conectar()
         query = "INSERT INTO tbllogin (nome, login, senha) VALUES (%s, %s, %s)"
         values = (self.nome, self.login, self.senha)
         return db.execute(query, values)

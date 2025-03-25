@@ -19,23 +19,23 @@ class LoginView(QMainWindow):
         self.linekey.setEchoMode(QLineEdit.Password)
 
         # Encontrando outros elementos da interface
-        self.btnlogin = self.findChild(QPushButton, 'btnlogin')
         self.lineuser = self.findChild(QLineEdit, 'lineuser')
+        self.btnlogin = self.findChild(QPushButton, 'btnlogin')
+        
 
     def connect_signals(self):
         # Conectando os botões aos métodos
         self.btnlogin.clicked.connect(self.realizar_login)
 
     def realizar_login(self):
-        #usuario = self.lineuser.text()
-        #senha = self.linekey.text()"
-        login = "adm"
-        senha = "adm"
-        print(f"Usuário: {login}, Senha: {senha}")  # Depuração
-        """if not self.validar_campos(usuario, senha):
-            return"""
+        usuario = self.lineuser.text()
+        senha = self.linekey.text()
+        
+        print(f"Usuário: {usuario}, Senha: {senha}")  # Depuração
+        if not self.validar_campos(usuario, senha):
+            return
 
-        if self.verificar_credenciais(login, senha):
+        if self.verificar_credenciais is not None:
             self.abrir_principal()
         else:
             QMessageBox.warning(self, "Erro", "Usuário ou senha incorretos.")
@@ -47,9 +47,8 @@ class LoginView(QMainWindow):
         return True
 
     def verificar_credenciais(self, usuario, senha):
-        test_controller = UsuarioController.verificar_login(usuario, senha)
-        print(f"Verificando credenciais: {test_controller}")
-        return test_controller
+        # Verifica se o usuário e senha estão corretos
+        return UsuarioController.verificar_login(usuario, senha)
 
     def abrir_principal(self):
         print("Abrindo tela principal...")  # Depuração
