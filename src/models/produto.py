@@ -7,6 +7,7 @@ class Produto:
         self.unidade = unidade
         self.precocomp = precocomp
         self.precovenda = precovenda
+        self.markup = markup
     
     def calcular_markup(self):
         if self.precocomp == 0:
