@@ -28,13 +28,6 @@ UpStock é um projeto para gerenciar um banco de dados MySQL usando Python. Ele 
 
 ## Uso
 
-### Criar a tabela `login`
-
-Execute o script `create_table.py` para criar a tabela `login` no banco de dados `dbstore`:
-```bash
-python create_table.py
-```
-
 ### Executar o projeto
 
 Execute o script `main.py` para iniciar o projeto:
