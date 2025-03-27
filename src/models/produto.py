@@ -2,6 +2,7 @@ from utils.database import Database
 
 class Produto:
     def __init__(self, ean, descricao,Grupo, fabricante,unidade,precocomp,precovenda, markup):
+        self.lineID = None
         self.ean = ean
         self.Descricao = descricao 
         self.Grupo = Grupo
