@@ -17,4 +17,13 @@ class ProdutoController:
         except Exception as e:
             print(f"Erro ao pesquisar produto: {e}")
             return None
-    
+class MarkupController:
+    @staticmethod
+    def calcular_markup(precocomp):
+        try:
+            produto = Produto("", "", "", "", "", precocomp, 0, 0)
+            produto.calcular_markup()
+            return produto.markup
+        except Exception as e:
+            print(f"Erro ao calcular markup: {e}")
+            return None

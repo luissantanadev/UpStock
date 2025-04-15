@@ -4,6 +4,7 @@ import os
 from PyQt5.QtWidgets import QLineEdit, QPushButton
 from controllers.produto_controller import ProdutoController
 from PyQt5.QtWidgets import QMessageBox
+from views.markup_view import MarkupView
 
 class ProdutoView(QMainWindow):
     def __init__(self, parent=None):
@@ -32,7 +33,7 @@ class ProdutoView(QMainWindow):
         self.btnPesquisa.clicked.connect(self.pesquisar_produto)
         self.pushButton.clicked.connect(self.limpar_campos)
         self.btnSalvar.clicked.connect(self.salvar_produto)
-        self.btn_calc_markup.clicked.connect(self.calcular_markup)
+        self.btn_calc_markup.clicked.connect(self.abrir_markup)
     def pesquisar_produto(self):
         ean = self.line_ean.text()
         if not ean:
@@ -83,6 +84,8 @@ class ProdutoView(QMainWindow):
         self.precovenda.setText(str(produto['precovenda']))
         self.linemarkup.setText(str(produto['markup']))
         self.lineID.setText(str(produto['id_produto']))
-    def calcular_markup(self):
-        pass
+    def abrir_markup(self):
+        self.markup_view = MarkupView()
+        self.markup_view.show()
+        
     

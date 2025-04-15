@@ -32,7 +32,7 @@ class LoginView(QMainWindow):
         usuario = self.lineuser.text()
         senha = self.linekey.text()
         
-        print(f"Usuário: {usuario}, Senha: {senha}")  # Depuração
+        #print(f"Usuário: {usuario}, Senha: {senha}")  # Depuração
         if not self.validar_campos(usuario, senha):
             return
 

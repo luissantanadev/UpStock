@@ -20,10 +20,10 @@ class Usuario:
             # Verifica se o login e senha estão corretos
             query = "SELECT * FROM tbllogin WHERE login = %s AND senha = %s"
             resultado = db.fetch_one(query, (login, senha))
-            print(f"Resultado da verificação do bando de dados: {resultado}")  # Depuração
+            #print(f"Resultado da verificação do bando de dados: {resultado}")  # Depuração
             return resultado  # Retorna True se o login for válido
         except mysql.connector.Error as err:
-            print(f"Erro ao verificar login: {err}")
+            #print(f"Erro ao verificar login: {err}")
             return err
 
     def atualizar_senha(self,login, nova_senha):
