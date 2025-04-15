@@ -4,7 +4,6 @@ import os
 from PyQt5.QtWidgets import QLineEdit, QPushButton
 from controllers.produto_controller import ProdutoController
 from PyQt5.QtWidgets import QMessageBox
-from views.markup_view import MarkupView
 
 class ProdutoView(QMainWindow):
     def __init__(self, parent=None):
@@ -85,7 +84,7 @@ class ProdutoView(QMainWindow):
         self.linemarkup.setText(str(produto['markup']))
         self.lineID.setText(str(produto['id_produto']))
     def abrir_markup(self):
+        from views.markup_view import MarkupView  # Importação local para evitar dependência circular
         self.markup_view = MarkupView()
         self.markup_view.show()
-        
-    
+
