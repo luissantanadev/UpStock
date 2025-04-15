@@ -1,15 +1,23 @@
 import mysql.connector
 import mysql.connector.errors
+from dotenv import load_dotenv
+import os
 
 class Database:
     def __init__(self):
+        db_host = os.getenv("DB_HOST")
+        db_port = os.getenv("DB_PORT")
+        db_database = os.getenv("DB_DATABASE")
+        db_username = os.getenv("DB_USERNAME")
+        db_password = os.getenv("DB_PASSWORD")
         self.connection = None
         self.cursor = None
         self.connect(mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="1@!Cofggcvf",
-            database="dbstore"
+            host=db_host,
+            port=db_port,
+            database=db_database,
+            user=db_username,
+            password=db_password
         ))  # Conectar ao banco de dados
 
     def connect(self, connection):  
