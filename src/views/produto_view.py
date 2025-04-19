@@ -83,8 +83,4 @@ class ProdutoView(QMainWindow):
         self.precovenda.setText(str(produto['precovenda']))
         self.linemarkup.setText(str(produto['markup']))
         self.lineID.setText(str(produto['id_produto']))
-    def abrir_markup(self):
-        from views.markup_view import MarkupView  # Importação local para evitar dependência circular
-        self.markup_view = MarkupView()
-        self.markup_view.show()
-
+    

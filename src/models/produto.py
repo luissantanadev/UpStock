@@ -41,12 +41,3 @@ class Produto:
         # Aqui você pode adicionar a lógica para buscar o produto no banco de dados ou em outro lugar
         db = Database()
         return db.select_id("tblproduto", "ean", self.ean) 
-
-class Markup:
-    def __init__(self, markup):
-        self.markup = markup
-    def calcular_preco_venda(self, dv1, df1, lp1):
-        markups = 100 / (100 - (dv1 + df1 + lp1))
-        return markups
-    def exibir_markups(self):
-        return self.markup
