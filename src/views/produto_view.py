@@ -1,5 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtGui import QIntValidator, QDoubleValidator
 import os
 from PyQt5.QtWidgets import QLineEdit, QPushButton
 from controllers.produto_controller import ProdutoController
@@ -21,18 +22,35 @@ class ProdutoView(QMainWindow):
         self.line_tipo_und = self.findChild(QLineEdit, 'line_tipo_und')
         self.precounid = self.findChild(QLineEdit, 'precounid')  
         self.precovenda = self.findChild(QLineEdit, 'precovenda')
-        self.linemarkup = self.findChild(QLineEdit, 'linemarkup')
         self.lineID = self.findChild(QLineEdit, 'lineID')
+        # Configurar validação dos campos
+        int_validator = QIntValidator()  # Validador de números inteiros
+        double_validator = QDoubleValidator()  # Validador de números decimais
+        self.line_ean.setValidator(int_validator)
+        self.precounid.setValidator(double_validator)
+        self.precovenda.setValidator(double_validator)
+
         # botões
         self.btnPesquisa = self.findChild(QPushButton, 'btnPesquisa')
         self.pushButton = self.findChild(QPushButton, 'pushButton')
         self.btnSalvar = self.findChild(QPushButton, 'btnSalvar')
-        self.btn_calc_markup = self.findChild(QPushButton, 'btn_calc_markup')
-    # Conectando os botões aos métodos
+        # Conectando os botões aos métodos
         self.btnPesquisa.clicked.connect(self.pesquisar_produto)
         self.pushButton.clicked.connect(self.limpar_campos)
         self.btnSalvar.clicked.connect(self.salvar_produto)
-        self.btn_calc_markup.clicked.connect(self.abrir_markup)
+        # Conectar os campos ao método de capitalização
+        self.line_descricao.textChanged.connect(self.forcar_maiusculas)
+        self.line_grupo.textChanged.connect(self.forcar_maiusculas)
+        self.line_fabric.textChanged.connect(self.forcar_maiusculas)
+        self.line_tipo_und.textChanged.connect(self.forcar_maiusculas)
+
+    def forcar_maiusculas(self):
+        # Atualiza o texto dos campos para maiúsculas
+        self.line_descricao.setText(self.line_descricao.text().upper())
+        self.line_grupo.setText(self.line_grupo.text().upper())
+        self.line_fabric.setText(self.line_fabric.text().upper())
+        self.line_tipo_und.setText(self.line_tipo_und.text().upper())
+
     def pesquisar_produto(self):
         ean = self.line_ean.text()
         if not ean:
@@ -51,14 +69,13 @@ class ProdutoView(QMainWindow):
         tipo_und = self.line_tipo_und.text()
         precounid = self.precounid.text()
         precovenda = self.precovenda.text()
-        markup = self.linemarkup.text()
         id_produto = self.lineID.text()
 
         if not all([ean, descricao, grupo, fabricante, tipo_und, precounid, precovenda]):
             QMessageBox.warning(self, "Erro", "Preencha todos os campos.")
             return
 
-        if ProdutoController.cadastrar_produto(ean, descricao, grupo, fabricante, tipo_und, precounid, precovenda, markup):
+        if ProdutoController.cadastrar_produto(ean, descricao, grupo, fabricante, tipo_und, precounid, precovenda):
             QMessageBox.information(self, "Sucesso", "Produto salvo com sucesso.")
             self.limpar_campos()
         else:
@@ -71,7 +88,6 @@ class ProdutoView(QMainWindow):
         self.line_tipo_und.clear()
         self.precounid.clear()
         self.precovenda.clear()
-        self.linemarkup.clear()
         self.lineID.clear()
     def preencher_campos(self, produto):
         self.line_ean.setText(produto['ean'])
@@ -81,6 +97,5 @@ class ProdutoView(QMainWindow):
         self.line_tipo_und.setText(produto['tipo_und'])
         self.precounid.setText(str(produto['precounid']))
         self.precovenda.setText(str(produto['precovenda']))
-        self.linemarkup.setText(str(produto['markup']))
         self.lineID.setText(str(produto['id_produto']))
     

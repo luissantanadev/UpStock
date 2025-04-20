@@ -2,9 +2,9 @@ from models.produto import Produto
 
 class ProdutoController:
     @staticmethod
-    def cadastrar_produto(ean, descricao, grupo, fabricante, unidade, precocomp, precovenda, markup):
+    def cadastrar_produto(ean, descricao, grupo, fabricante, unidade, precocomp, precovenda):
         try:
-            produto = Produto(ean, descricao, grupo, fabricante, unidade, precocomp, precovenda, markup)
+            produto = Produto(ean, descricao, grupo, fabricante, unidade, precocomp, precovenda)
             produto.cadastro_produto()
             return True
         except Exception as e:
