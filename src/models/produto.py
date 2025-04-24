@@ -34,6 +34,20 @@ class Produto:
         return db.delete_id("tblproduto", "ean", self.ean)
 
     def buscar_produto(self):
-        # Aqui você pode adicionar a lógica para buscar o produto no banco de dados ou em outro lugar
-        db = Database()
-        return db.select_id("tblproduto", "ean", self.ean) 
+        try:
+            db = Database()
+            produto = db.select_id("tblproduto", "ean", self.ean)
+            if produto:
+                return {
+                    "ean": produto[0],
+                    "descricao": produto[1],
+                    "grupo": produto[2],
+                    "fabricante": produto[3],
+                    "unidade": produto[4],
+                    "precocomp": produto[5],
+                    "precovenda": produto[6],
+                }
+            return None
+        except Exception as e:
+            print(f"Erro ao buscar produto: {e}")
+            return None

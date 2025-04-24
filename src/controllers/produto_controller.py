@@ -12,7 +12,7 @@ class ProdutoController:
             return False
     def pesquisar_produto(ean):
         try:
-            produto = Produto(ean, "", "", "", "", 0, 0, 0)
+            produto = Produto(ean, "", "", "", "", 0, 0)
             return produto.buscar_produto()
         except Exception as e:
             print(f"Erro ao pesquisar produto: {e}")

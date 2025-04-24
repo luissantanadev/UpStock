@@ -62,24 +62,35 @@ class ProdutoView(QMainWindow):
         else:
             QMessageBox.information(self, "Resultado", "Produto não encontrado.")
     def salvar_produto(self):
-        ean = self.line_ean.text()
-        descricao = self.line_descricao.text()
-        grupo = self.line_grupo.text()
-        fabricante = self.line_fabric.text()
-        tipo_und = self.line_tipo_und.text()
-        precounid = self.precounid.text()
-        precovenda = self.precovenda.text()
-        id_produto = self.lineID.text()
+        try:
+            ean = self.line_ean.text()
+            descricao = self.line_descricao.text()
+            grupo = self.line_grupo.text()
+            fabricante = self.line_fabric.text()
+            tipo_und = self.line_tipo_und.text()
+            precounid = self.precounid.text().replace(',', '.').strip()
+            precovenda = self.precovenda.text().replace(',', '.').strip()
 
-        if not all([ean, descricao, grupo, fabricante, tipo_und, precounid, precovenda]):
-            QMessageBox.warning(self, "Erro", "Preencha todos os campos.")
-            return
+            # Validação de campos numéricos
+            try:
+                precounid = float(precounid)
+                precovenda = float(precovenda)
+            except ValueError:
+                QMessageBox.warning(self, "Erro", "Preencha os campos de preço corretamente.")
+                return
 
-        if ProdutoController.cadastrar_produto(ean, descricao, grupo, fabricante, tipo_und, precounid, precovenda):
-            QMessageBox.information(self, "Sucesso", "Produto salvo com sucesso.")
-            self.limpar_campos()
-        else:
-            QMessageBox.warning(self, "Erro", "Erro ao salvar o produto.")
+            if not all([ean, descricao, grupo, fabricante, tipo_und]):
+                QMessageBox.warning(self, "Erro", "Preencha todos os campos.")
+                return
+
+            if ProdutoController.cadastrar_produto(ean, descricao, grupo, fabricante, tipo_und, precounid, precovenda):
+                QMessageBox.information(self, "Sucesso", "Produto salvo com sucesso.")
+                self.limpar_campos()
+            else:
+                QMessageBox.warning(self, "Erro", "Erro ao salvar o produto.")
+        except Exception as e:
+            QMessageBox.critical(self, "Erro", f"Ocorreu um erro: {e}")
+
     def limpar_campos(self):
         self.line_ean.clear()
         self.line_descricao.clear()
@@ -90,12 +101,15 @@ class ProdutoView(QMainWindow):
         self.precovenda.clear()
         self.lineID.clear()
     def preencher_campos(self, produto):
-        self.line_ean.setText(produto['ean'])
-        self.line_descricao.setText(produto['descricao'])
-        self.line_grupo.setText(produto['grupo'])
-        self.line_fabric.setText(produto['fabricante'])
-        self.line_tipo_und.setText(produto['tipo_und'])
-        self.precounid.setText(str(produto['precounid']))
-        self.precovenda.setText(str(produto['precovenda']))
-        self.lineID.setText(str(produto['id_produto']))
-    
+        try:
+            self.line_ean.setText(produto.get('ean', ''))
+            self.line_descricao.setText(produto.get('descricao', ''))
+            self.line_grupo.setText(produto.get('grupo', ''))
+            self.line_fabric.setText(produto.get('fabricante', ''))
+            self.line_tipo_und.setText(produto.get('unidade', ''))
+            self.precounid.setText(str(produto.get('precocomp', '')))
+            self.precovenda.setText(str(produto.get('precovenda', '')))
+            self.lineID.setText(str(produto.get('id_produto', '')))
+        except Exception as e:
+            QMessageBox.critical(self, "Erro", f"Erro ao preencher campos: {e}")
+
