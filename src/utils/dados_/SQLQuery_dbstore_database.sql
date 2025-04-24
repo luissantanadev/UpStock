@@ -10,14 +10,6 @@ create table tbllogin(
     senha VARCHAR(50) not null,
     primary key(idlogin)
 );
-create table tblmarkup(
-	idkup int not null auto_increment,
-    df decimal(5,2),
-    dv decimal(5,2),
-    lp decimal(5,2),
-	markup decimal(5,2),
-    primary key(idkup)
-);
 create table tblproduto(
 	idproduto int not null auto_increment,
     ean varchar(13),
@@ -26,7 +18,6 @@ create table tblproduto(
     fabricante varchar(100),
     unidade varchar(6),
     precocusto decimal(6,2),
-    markup decimal(5,2),
     precovenda decimal(6,2),
     primary key(idproduto)
 );

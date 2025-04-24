@@ -1,43 +1,44 @@
+import unittest
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src', 'utils')))
+import mysql.connector
+import mysql.connector.errors
 from src.utils.database import Database
 from src.models.usuario import Usuario
 from src.controllers.usuario_controller import UsuarioController
-from src.views.principal_view import PrincipalView
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit, QPushButton
-import mysql.connector
-import mysql.connector.errors
 
-app = QApplication(sys.argv)  # Adicionando a criação do QApplication
+class TestDatabase(unittest.TestCase):
+    def setUp(self):
+        """Configuração inicial antes de cada teste."""
+        self.database = Database()
+        self.connection = self.database.connection
 
-data = Database()
-try:
-    data = Database()
-    print("Conexão com o banco de dados estabelecida.")
-    # Exemplo de operação de inserção
-    login = "adm"
-    senha = "adm"
-    
-    print("****************************************************************************")
-    test_controller = UsuarioController.verificar_login(login, senha)
-    print(f'resultado do teste: {Usuario.verificar(login, senha)}')
-    print("****************************************************************************")
-    if test_controller is not None:
-        tela = PrincipalView()
-        tela.show()
-        
-    else:
-        print("Falha na autenticação do usuário.")
+    def tearDown(self):
+        """Finalização após cada teste."""
+        if self.connection:
+            self.database.close()
 
-    # Exemplo de operação de seleção
-except mysql.connector.Error as err:
-    print(f"Erro: {err}")
-finally:
-    if data.connection:
-        data.close()
+    def test_connection_established(self):
+        """Teste para verificar se a conexão com o banco de dados foi estabelecida."""
+        self.assertIsNotNone(self.connection, "A conexão com o banco de dados não foi estabelecida.")
 
-sys.exit(app.exec_())  # Adicionando a execução do loop de eventos do QApplication
+    def test_usuario_verificar_login(self):
+        """Teste para verificar a autenticação de um usuário."""
+        login = "adm"
+        senha = "adm"
+        resultado = UsuarioController.verificar_login(login, senha)
+        self.assertIsNotNone(resultado, "Falha na autenticação do usuário.")
+        self.assertTrue(Usuario.verificar(login, senha), "As credenciais do usuário são inválidas.")
+
+    def test_invalid_login(self):
+        """Teste para verificar autenticação com credenciais inválidas."""
+        login = "invalido"
+        senha = "invalido"
+        resultado = UsuarioController.verificar_login(login, senha)
+        self.assertIsNone(resultado, "A autenticação deveria falhar para credenciais inválidas.")
+
+if __name__ == "__main__":
+    unittest.main()

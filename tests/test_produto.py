@@ -12,7 +12,7 @@ class TestProduto(unittest.TestCase):
         self.produto = Produto(
             ean="1234567890123",
             descricao="Produto Teste",
-            Grupo="Categoria Teste",  # Corrigido de 'grupo' para 'Grupo'
+            grupo="Categoria Teste",
             fabricante="Fabricante Teste",
             unidade="Unidade Teste",
             precocomp=10.0,
