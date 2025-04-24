@@ -25,8 +25,14 @@ class LoginView(QMainWindow):
         
 
     def connect_signals(self):
-        # Conectando os botões aos métodos
+        # Conectando o botão ao método realizar_login
         self.btnlogin.clicked.connect(self.realizar_login)
+
+        # Conectando o Enter no lineuser para avançar para o linekey
+        self.lineuser.returnPressed.connect(lambda: self.linekey.setFocus())
+
+        # Conectando o Enter no linekey para realizar o login
+        self.linekey.returnPressed.connect(self.realizar_login)
 
     def realizar_login(self):
         usuario = self.lineuser.text()
