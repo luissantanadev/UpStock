@@ -4,8 +4,8 @@ class Produto:
     def __init__(self, ean, descricao,Grupo, fabricante,unidade,precocomp,precovenda):
         self.lineID = None
         self.ean = ean
-        self.Descricao = descricao 
-        self.Grupo = Grupo
+        self.descricao = descricao 
+        self.grupo = Grupo
         self.fabricante = fabricante
         self.unidade = unidade
         self.precocomp = precocomp
@@ -19,7 +19,7 @@ class Produto:
         # Aqui você pode adicionar a lógica para cadastrar o produto no banco de dados ou em outro lugar
         try:
             query = "INSERT INTO tblproduto (ean, descricao, categoria, fabricante, unidade, precocusto, markup, precovenda) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-            values = (self.ean, self.Descricao, self.Grupo, self.fabricante, self.unidade, self.precocomp, self.precovenda)
+            values = (self.ean, self.descricao, self.grupo, self.fabricante, self.unidade, self.precocomp, self.precovenda)
             # Execute a consulta no banco de dados aqui
             db = Database()
             return db.execute(query, values)
@@ -31,7 +31,7 @@ class Produto:
         # Aqui você pode adicionar a lógica para atualizar o produto no banco de dados ou em outro lugar
         db = Database()
         return db.execute("UPDATE tblproduto SET ean = %s, descricao = %s, categoria = %s, fabricante = %s, unidade = %s, precocusto = %s,precovenda = %s WHERE ean = %s",
-                 (self.ean, self.Descricao, self.Grupo, self.fabricante, self.unidade, self.precocomp, self.precovenda, self.ean))
+                 (self.ean, self.descricao, self.grupo, self.fabricante, self.unidade, self.precocomp, self.precovenda, self.ean))
     def excluir_produto(self):
         # Aqui você pode adicionar a lógica para excluir o produto do banco de dados ou em outro lugar
         db = Database()
