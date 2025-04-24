@@ -1,19 +1,14 @@
-from models.produto import Produto
+from src.models.produto import Produto
 
 class ProdutoController:
-    @staticmethod
-    def cadastrar_produto(ean, descricao, grupo, fabricante, unidade, precocomp, precovenda):
-        try:
-            produto = Produto(ean, descricao, grupo, fabricante, unidade, precocomp, precovenda)
-            produto.cadastro_produto()
-            return True
-        except Exception as e:
-            print(f"Erro ao cadastrar produto: {e}")
-            return False
-    def pesquisar_produto(ean):
-        try:
-            produto = Produto(ean, "", "", "", "", 0, 0)
-            return produto.buscar_produto()
-        except Exception as e:
-            print(f"Erro ao pesquisar produto: {e}")
-            return None
+    def cadastrar_produto(self, produto: Produto):
+        # Ajuste para usar o objeto Produto
+        return {
+            "codigo": produto.ean,
+            "descricao": produto.descricao,
+            "grupo": produto.grupo,
+            "fabricante": produto.fabricante,
+            "unidade": produto.unidade,
+            "precocomp": produto.precocomp,
+            "precovenda": produto.precovenda
+        }
