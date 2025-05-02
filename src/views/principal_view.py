@@ -14,7 +14,7 @@ class PrincipalView(QMainWindow):
         self.actionProdutos.triggered.connect(self.abrir_produto)
         self.actionCaixa.triggered.connect(self.abrir_caixa)
         self.actionUser.triggered.connect(self.abrir_usuario)
-        self.actionClientes.triggered.connect(self.abrir_cliente)
+        self.actionClientes.triggered.connect(self.abrir_cliente_cadastro)
         self.actionEstoque.triggered.connect(self.abrir_estoque)
         #self.actionRelatorio.triggered.connect(self.abrir_relatorio)
 
@@ -33,11 +33,14 @@ class PrincipalView(QMainWindow):
         self.usuario_view = UsuarioView()
         self.usuario_view.show()
     
-    def abrir_cliente(self):
-        from src.views.cliente_view import ClienteView
-        self.cliente_view = ClienteView()
+    def abrir_cliente_pesquisa(self):
+        from views.cliente_pesquisar_view import ClientePesquisaView
+        self.cliente_view = ClientePesquisaView()
         self.cliente_view.show()
-    
+    def abrir_cliente_cadastro(self):
+        from views.cliente_cad_view import ClienteCadView
+        self.cliente_view = ClienteCadView()
+        self.cliente_view.show()
     def abrir_estoque(self):
         from src.views.estoque_view import EstoqueView
         self.estoque_view = EstoqueView()
