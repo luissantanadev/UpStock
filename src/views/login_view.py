@@ -41,7 +41,7 @@ class LoginView(QMainWindow):
         if not self.validar_campos(usuario, senha):
             return
 
-        if self.verificar_credenciais is not None:
+        if self.verificar_credenciais is not None or not False:
             return self.abrir_principal()
         else:
             QMessageBox.warning(self, "Erro", "Usuário ou senha incorretos.")

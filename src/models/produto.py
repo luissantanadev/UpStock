@@ -10,7 +10,7 @@ class Produto:
         self.unidade = unidade
         self.precocomp = precocomp
         self.precovenda = precovenda
-    
+    @staticmethod
     def cadastro_produto(self):
         # Aqui você pode adicionar a lógica para cadastrar o produto no banco de dados ou em outro lugar
         try:
@@ -32,22 +32,13 @@ class Produto:
         # Aqui você pode adicionar a lógica para excluir o produto do banco de dados ou em outro lugar
         db = Database()
         return db.delete_id("tblproduto", "ean", self.ean)
-
-    def buscar_produto(self):
-        try:
-            db = Database()
-            produto = db.select_id("tblproduto", "ean", self.ean)
-            if produto:
-                return {
-                    "ean": produto[0],
-                    "descricao": produto[1],
-                    "grupo": produto[2],
-                    "fabricante": produto[3],
-                    "unidade": produto[4],
-                    "precocomp": produto[5],
-                    "precovenda": produto[6],
-                }
-            return None
-        except Exception as e:
-            print(f"Erro ao buscar produto: {e}")
-            return None
+    @staticmethod
+    def listar_produtos(self):
+        # Aqui você pode adicionar a lógica para listar os produtos do banco de dados ou em outro lugar
+        db = Database()
+        return db.select_all("tblproduto")
+    @staticmethod
+    def listar_produto_id(self, id_produto):
+        # Aqui você pode adicionar a lógica para listar os produtos do banco de dados ou em outro lugar
+        db = Database()
+        return db.select_id("tblproduto", "id_produto", id_produto)
